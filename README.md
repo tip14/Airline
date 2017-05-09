@@ -1,17 +1,13 @@
 # Airline launching instruction
 <h2>Editing files</h2>
 
-1.	Add string below to Tomcat <strong>server.xml</strong>
-
-<pre>&lt;Connector connectionTimeout="20000" port="8181" protocol="HTTP/1.1" redirectPort="8443"/&gt;</pre>
-
-2.	Add strings below to Tomcat <strong>tomcat-users.xml</strong>
+1.	Add strings below to Tomcat <strong>tomcat-users.xml</strong>
 <pre>
 &lt;role rolename="manager-script"/&gt;
 &lt;user password="admin1" roles="manager-script" username="admin1"/&gt;
 </pre>
 
-3.	Add strings below to Maven <strong>settings.xml</strong> in <servers> section
+2.	Add strings below to Maven <strong>settings.xml</strong> in <servers> section
 <pre>
 &lt;server&gt;
       &lt;id&gt;tomcat&lt;/id&gt;
