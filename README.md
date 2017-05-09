@@ -22,7 +22,7 @@
 
 <h2>Launch the program</h2>
 <ol>
-  <li>Launch Tomcat server</li>
+  <li>Start Tomcat server</li>
   <li>In command line open a root directory of project (this is the directory where contains pom.xml)</li>
   <li>Build project with command <strong>mvn clean install</strong></li>
   <li>Deploy project with command <strong>mvn tomcat7:deploy</strong></li>
