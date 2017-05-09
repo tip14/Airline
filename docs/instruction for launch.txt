@@ -1,12 +1,9 @@
 EDITING FILES
-1.	Add string below to Tomcat server.xml
-<Connector connectionTimeout="20000" port="8181" protocol="HTTP/1.1" redirectPort="8443"/>
-
-2.	Add strings below to Tomcat tomcat-users.xml
+1.	Add strings below to Tomcat tomcat-users.xml
 <role rolename="manager-script"/>
 <user password="admin1" roles="manager-script" username="admin1"/>
 
-3.	Add strings below to Maven settings.xml in <servers> section
+2.	Add strings below to Maven settings.xml in <servers> section
 <server>
       <id>tomcat</id>
       <username>admin1</username>
