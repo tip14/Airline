@@ -13,9 +13,14 @@
 	
 	<section>
 		<article class="main-text">
-		<p class="">${regSuccess}</p>
+
 			<h1>Airline Project</h1>
-			<a href="registration">login/registration</a>
+			
+			<div class="reg-btn-block">
+				<a href="registration"><button class="reg-btn-btn">Registration</button></a>
+				<p class="success-reg-msg">${regSuccess}</p>
+			</div>
+			
 			<p>It is an Airline project provides information about airplanes,
 				tickets etc.</p>
 			<ul>
@@ -25,9 +30,8 @@
 					admins</li>
 				<li><a href="dashboard">Dashboard</a> will help you in
 					searching and listing of products</li>
-
 			</ul>
-<a href="login">login/registration</a>
+						
 		</article>
 	</section>
 	<div class="bg-img"></div>

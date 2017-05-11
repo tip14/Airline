@@ -11,22 +11,22 @@
 
 	<%@include file="navigation.jsp"%>
 	
-	<p>Please, fill fields below for registration</p>
+	<p class="reg-msg">Please, fill fields below for registration</p>
 	<form action="registration" method="POST">
 		<div>
 			<label for="email">E-mail:</label> 
 			<input type="text" id="email" name="email">
-			<p class="">${emailFillingError}</p>
+			<p class="field-err-msg">${emailFillingError}</p>
 		</div>
 		<div>
 			<label for="pass">Password:</label> 
 			<input type="password" id="pass" name="pass">
-			<p class="">${passFillingError}</p>
+			<p class="field-err-msg">${passFillingError}</p>
 		</div>
 		<div>
 			<label for="pass-repeat">Repeat:</label>
 			<input type="password" id="pass-repeat" name="pass-repeat">
-			<p class="">${passRepeatFillingError}</p>
+			<p class="field-err-msg">${passRepeatFillingError}</p>
 		</div>
 		<div>
 			<label for="role">Role:</label>
