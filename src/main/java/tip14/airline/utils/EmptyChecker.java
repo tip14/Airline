@@ -7,10 +7,9 @@ import org.apache.log4j.Logger;
 
 import tip14.airline.storage.Storage;
 
-
 public class EmptyChecker {
 	private static final Logger logger = Logger.getLogger(Storage.class);
-	
+
 	public static boolean isFieldsFilled(String... strings) {
 
 		for (String string : strings) {
@@ -19,25 +18,42 @@ public class EmptyChecker {
 				logger.debug("Some of strings is empty");
 				return false;
 			}
-
 		}
-		
+
 		logger.debug("All fields are filled");
 
 		return true;
-
 	}
-	
-	public static boolean isListEmpty(List<String> list) {
 
-		if(list!=null){
-			if(list.size()>0){
-				return false;
+	public static boolean[] whatIsNotFilled(String... strings) {
+
+		int stringsLength = strings.length;
+
+		boolean[] filledFields = new boolean[stringsLength];
+
+		for (int i = 0; i < stringsLength; i++) {
+			if (StringUtils.isBlank(strings[i])) {
+				filledFields[i] = false;
+			} else {
+				filledFields[i] = true;
 			}
 		}
 
-		return true;
+		logger.debug("Not filled fields were cheched");
 
+		return filledFields;
 	}
 
+	public static boolean isListEmpty(List<String> list) {
+
+		if (list != null) {
+			if (list.size() > 0) {
+				return false;
+			}
+		}
+		
+		logger.debug("List is empty");
+		
+		return true;
+	}
 }

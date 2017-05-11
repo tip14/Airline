@@ -13,7 +13,9 @@
 	
 	<section>
 		<article class="main-text">
+		<p class="">${regSuccess}</p>
 			<h1>Airline Project</h1>
+			<a href="registration">login/registration</a>
 			<p>It is an Airline project provides information about airplanes,
 				tickets etc.</p>
 			<ul>
@@ -25,7 +27,7 @@
 					searching and listing of products</li>
 
 			</ul>
-
+<a href="login">login/registration</a>
 		</article>
 	</section>
 	<div class="bg-img"></div>

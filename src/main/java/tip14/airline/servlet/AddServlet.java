@@ -54,8 +54,6 @@ public class AddServlet extends HttpServlet {
 			Plane newPlane = new Plane(newPlaneModel, newPlaneCapacity, newPlaneBuildDate);
 			Storage.addPlane(newPlane);
 
-			
-			
 			request.setAttribute(SUCCESS, SUCCESS_MESSAGE);
 			request.getRequestDispatcher(ADD_JSP_PATH).forward(request, response);
 
