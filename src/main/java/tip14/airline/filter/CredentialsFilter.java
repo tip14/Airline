@@ -13,78 +13,60 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 import tip14.airline.utils.CredentialsChecker;
-import tip14.airline.utils.EmptyChecker;
 
 public class CredentialsFilter implements Filter {
+	//DO LOGGGING
+	//DO LOGGGING AND MAKE MORE INFORMATIVE
+	//DO LOGGGING
 
 	private static final Logger logger = Logger.getLogger(CredentialsFilter.class);
 	private final String REG_JSP_PATH = "WEB-INF/registration.jsp";
 	private final String EMAIL_FILLING_ERROR = "e-mail is not filled correctly";
 	private final String PASS_FILLING_ERROR = "password length < 4";
 	private final String PASS_REPEAT_FILLING_ERROR = "repeated password isn't same";
+	private final String EMAIL = "email";
+	private final String PASS = "pass";
+	private final String PASS_REPEAT = "pass-repeat";
+	private final String POST = "POST";
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-		if (httpRequest.getMethod().equals("POST")) {
-			
+		if (httpRequest.getMethod().equals(POST)) {
+
 			logger.debug("POST method data is going to process...");
-			
-			String email = request.getParameter("email");
-			String pass = request.getParameter("pass");
-			String passRepeat = request.getParameter("pass-repeat");
 
-			if (EmptyChecker.isFieldsFilled(email, pass, passRepeat)) {
+			String email = request.getParameter(EMAIL);
+			String pass = request.getParameter(PASS);
+			String passRepeat = request.getParameter(PASS_REPEAT);
+
+			if (CredentialsChecker.isCreadentialsValid(email, pass, passRepeat)) {
+
+				logger.debug("Creadentials are valid");
+
+				chain.doFilter(request, response);
 				
-				logger.debug("Fields are filled");
-
-				if (CredentialsChecker.isCreadentialsValid(email, pass, passRepeat)) {
-					
-					logger.debug("Creadentials are valid");
-
-					chain.doFilter(request, response);
-
-				} else {
-					
-					logger.debug("Creadentials are not valid");
-
-					boolean[] notValidCredentials = CredentialsChecker.whatIsNotValid(email, pass, passRepeat);
-
-					if (notValidCredentials[0] == false) {
-						request.setAttribute("emailFillingError", EMAIL_FILLING_ERROR);
-					}
-					if (notValidCredentials[1] == false) {
-						request.setAttribute("passFillingError", PASS_FILLING_ERROR);
-					}
-					if (notValidCredentials[2] == false) {
-						request.setAttribute("passRepeatFillingError", PASS_REPEAT_FILLING_ERROR);
-					}
-
-					request.getRequestDispatcher(REG_JSP_PATH).forward(request, response);
-
-				}
-
 			} else {
-				
-				logger.debug("Fields are not filled");
 
-				boolean[] notFilledFields = EmptyChecker.whatIsNotFilled(email, pass, passRepeat);
+				logger.debug("Creadentials are not valid");
 
-				if (notFilledFields[0] == false) {
+				boolean[] notValidCredentials = CredentialsChecker.whatIsNotValid(email, pass, passRepeat);
+
+				if (notValidCredentials[0] == false) {
 					request.setAttribute("emailFillingError", EMAIL_FILLING_ERROR);
 				}
-				if (notFilledFields[1] == false) {
+				if (notValidCredentials[1] == false) {
 					request.setAttribute("passFillingError", PASS_FILLING_ERROR);
 				}
-				if (notFilledFields[2] == false) {
+				if (notValidCredentials[2] == false) {
 					request.setAttribute("passRepeatFillingError", PASS_REPEAT_FILLING_ERROR);
 				}
 
 				request.getRequestDispatcher(REG_JSP_PATH).forward(request, response);
-
 			}
+
 		} else {
 			logger.debug("GET method was retrieved to registration page without attributes");
 
@@ -92,10 +74,10 @@ public class CredentialsFilter implements Filter {
 		}
 	}
 
-	public void init(FilterConfig fConfig) throws ServletException {
+	public void destroy() {
 	}
 
-	public void destroy() {
+	public void init(FilterConfig arg0) throws ServletException {
 	}
 
 }

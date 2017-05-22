@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tip14.airline.storage.Storage;
+import tip14.airline.storage.PlaneStorage;
 
 @WebServlet("/remove")
 public class RemoveServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class RemoveServlet extends HttpServlet {
 		String planeModel = request.getParameter(PLANE_MODEL_FOR_DELETE);
 		try {
 			logger.info("Trying to delete " + planeModel);
-			Storage.deletePlane(planeModel);
+			PlaneStorage.deletePlane(planeModel);
 		} catch (Exception e) {
 			logger.error("Exception" + e.getClass().getSimpleName());
 			request.setAttribute(NOT_DELETED, NOT_DELETED_MESSAGE);

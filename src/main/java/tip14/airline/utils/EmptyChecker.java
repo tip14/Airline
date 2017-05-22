@@ -5,10 +5,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import tip14.airline.storage.Storage;
-
 public class EmptyChecker {
-	private static final Logger logger = Logger.getLogger(Storage.class);
+	private static final Logger logger = Logger.getLogger(EmptyChecker.class);
 
 	public static boolean isFieldsFilled(String... strings) {
 

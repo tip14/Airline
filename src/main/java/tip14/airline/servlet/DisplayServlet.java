@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tip14.airline.model.Plane;
-import tip14.airline.storage.Storage;
+import tip14.airline.storage.PlaneStorage;
 
 @WebServlet("/dashboard")
 public class DisplayServlet extends HttpServlet {
@@ -28,7 +28,7 @@ public class DisplayServlet extends HttpServlet {
 		
 		logger.debug("GET request is recieved from "+request.getRemoteAddr());
 		
-		List<Plane> planesForDisplayList = Storage.getPlaneStorage();
+		List<Plane> planesForDisplayList = PlaneStorage.getPlaneStorage();
 
 		request.setAttribute(PLANES_FOR_DISPLAY, planesForDisplayList);
 		request.getRequestDispatcher(DASHBOARD_JSP_PATH).forward(request, response);

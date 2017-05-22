@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tip14.airline.model.User;
-import tip14.airline.storage.Storage;
+import tip14.airline.storage.UserStorage;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -37,7 +37,7 @@ public class RegistrationServlet extends HttpServlet {
 		String pass = request.getParameter("pass");
 		String role = request.getParameter("role");
 		
-		Storage.addUser(new User(email, pass, role));
+		UserStorage.addUser(new User(email, pass, role));
 		
 		logger.debug("New user was added");
 		

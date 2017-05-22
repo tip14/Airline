@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tip14.airline.model.Plane;
-import tip14.airline.storage.Storage;
+import tip14.airline.storage.PlaneStorage;
 import tip14.airline.utils.EmptyChecker;
 
 @WebServlet("/add")
@@ -52,7 +52,7 @@ public class AddServlet extends HttpServlet {
 			int newPlaneCapacity = Integer.parseInt(capacity);
 
 			Plane newPlane = new Plane(newPlaneModel, newPlaneCapacity, newPlaneBuildDate);
-			Storage.addPlane(newPlane);
+			PlaneStorage.addPlane(newPlane);
 
 			request.setAttribute(SUCCESS, SUCCESS_MESSAGE);
 			request.getRequestDispatcher(ADD_JSP_PATH).forward(request, response);

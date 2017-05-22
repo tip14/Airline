@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tip14.airline.model.Plane;
-import tip14.airline.storage.Storage;
+import tip14.airline.storage.PlaneStorage;
 
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
@@ -32,7 +32,7 @@ public class SearchServlet extends HttpServlet {
 		logger.debug("POST request is recieved from " + request.getRemoteAddr());
 
 		String wordForSearch = request.getParameter(SEARCH_FIELD);
-		List<Plane> foundPlanesList = Storage.getFoundPlanes(wordForSearch);
+		List<Plane> foundPlanesList = PlaneStorage.getFoundPlanes(wordForSearch);
 
 		if (foundPlanesList.isEmpty()) {
 			request.setAttribute(NOT_FOUND, NOT_FOUND_MESSAGE + wordForSearch);

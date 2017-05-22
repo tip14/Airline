@@ -25,7 +25,7 @@ public class CredentialsChecker {
 		
 		logger.debug("Password validity was checked");
 		
-		return passLength > 4 && passLength < 26;
+		return passLength >= 4 && passLength <= 26;
 	}
 
 	public static boolean isRepeatPasswordValid(String pass, String repeatPass) {
