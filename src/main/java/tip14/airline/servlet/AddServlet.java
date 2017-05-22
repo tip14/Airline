@@ -28,6 +28,8 @@ public class AddServlet extends HttpServlet {
 	private final String SUCCESS_MESSAGE = "Plane was successfully added";
 	private final String ERROR = "error";
 	private final String ERROR_MESSAGE = "Error! not all fields filled";
+	private final String ALL_FIELDS_FILLED = "All fields for plane adding were filled";
+	private final String NOT_ALL_FIELDS_FILLED = "Not all fields for plane adding were filled";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -47,7 +49,7 @@ public class AddServlet extends HttpServlet {
 		boolean allFieldsFilled = EmptyChecker.isFieldsFilled(newPlaneModel, newPlaneBuildDate, capacity);
 
 		if (allFieldsFilled) {
-			logger.debug("All fields for plane adding were filled");
+			logger.debug(ALL_FIELDS_FILLED);
 			
 			int newPlaneCapacity = Integer.parseInt(capacity);
 
@@ -58,7 +60,7 @@ public class AddServlet extends HttpServlet {
 			request.getRequestDispatcher(ADD_JSP_PATH).forward(request, response);
 
 		} else {
-			logger.debug("Not all fields for plane adding were filled");
+			logger.debug(NOT_ALL_FIELDS_FILLED);
 			request.setAttribute(ERROR, ERROR_MESSAGE);
 			request.getRequestDispatcher(ADD_JSP_PATH).forward(request, response);
 		}

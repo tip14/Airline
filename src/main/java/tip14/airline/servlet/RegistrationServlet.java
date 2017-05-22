@@ -21,13 +21,16 @@ public class RegistrationServlet extends HttpServlet {
 	private final String REG_JSP_PATH = "WEB-INF/registration.jsp";
 	private final String HOME_JSP_PATH = "WEB-INF/home.jsp";
 	private final String SUCCESS_REG = "Registration was successful";
+	private final String TO_HOME_PAGE = "Redirected to home page";
+	private final String TO_REG_PAGE = "Redirected to registration page";
+	
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		request.getRequestDispatcher(REG_JSP_PATH).forward(request, response);
 		
-		logger.debug("Retrieved to registration page");
+		logger.debug(TO_REG_PAGE);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,12 +42,12 @@ public class RegistrationServlet extends HttpServlet {
 		
 		UserStorage.addUser(new User(email, pass, role));
 		
-		logger.debug("New user was added");
+		logger.debug("New user" + email+ " was added");
 		
 		request.setAttribute("regSuccess", SUCCESS_REG);
 		request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
 		
-		logger.debug("Retrieved to home page");
+		logger.debug(TO_HOME_PAGE);
 		
 	}
 

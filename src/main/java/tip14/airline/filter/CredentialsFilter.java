@@ -28,6 +28,13 @@ public class CredentialsFilter implements Filter {
 	private final String PASS = "pass";
 	private final String PASS_REPEAT = "pass-repeat";
 	private final String POST = "POST";
+	private final String GET_METHOD = "GET method. Request redirected to registration page without attributes";
+	private final String POST_METHOD = "POST method. Data is going to process";
+	private final String VALID_CREDENTIALS = "All creadentials are valid";
+	private final String NOT_VALID_CREDENTIALS = "Creadentials are not valid";
+
+	
+	
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -36,7 +43,7 @@ public class CredentialsFilter implements Filter {
 
 		if (httpRequest.getMethod().equals(POST)) {
 
-			logger.debug("POST method data is going to process...");
+			logger.debug(POST_METHOD);
 
 			String email = request.getParameter(EMAIL);
 			String pass = request.getParameter(PASS);
@@ -44,23 +51,26 @@ public class CredentialsFilter implements Filter {
 
 			if (CredentialsChecker.isCreadentialsValid(email, pass, passRepeat)) {
 
-				logger.debug("Creadentials are valid");
+				logger.debug(VALID_CREDENTIALS);
 
 				chain.doFilter(request, response);
 				
 			} else {
 
-				logger.debug("Creadentials are not valid");
+				logger.debug(NOT_VALID_CREDENTIALS);
 
 				boolean[] notValidCredentials = CredentialsChecker.whatIsNotValid(email, pass, passRepeat);
 
 				if (notValidCredentials[0] == false) {
+					logger.debug("not valid email: "+ email);
 					request.setAttribute("emailFillingError", EMAIL_FILLING_ERROR);
 				}
 				if (notValidCredentials[1] == false) {
+					logger.debug("not valid pass: "+ pass);
 					request.setAttribute("passFillingError", PASS_FILLING_ERROR);
 				}
 				if (notValidCredentials[2] == false) {
+					logger.debug("not valid repeated pass: "+ passRepeat);
 					request.setAttribute("passRepeatFillingError", PASS_REPEAT_FILLING_ERROR);
 				}
 
@@ -68,7 +78,8 @@ public class CredentialsFilter implements Filter {
 			}
 
 		} else {
-			logger.debug("GET method was retrieved to registration page without attributes");
+			
+			logger.debug(GET_METHOD);
 
 			chain.doFilter(request, response);
 		}

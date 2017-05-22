@@ -23,8 +23,6 @@ public class RemoveServlet extends HttpServlet {
 	private final String DELETED = "deleted";
 	private final String DELETED_MESSAGE = "Deleted successful";
 	
-	
-	
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

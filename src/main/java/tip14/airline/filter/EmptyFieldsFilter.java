@@ -28,6 +28,8 @@ public class EmptyFieldsFilter implements Filter {
 	private final String PASS = "pass";
 	private final String PASS_REPEAT = "pass-repeat";
 	private final String POST = "POST";
+	private final String GET_METHOD = "GET method. Request redirected to registration page without attributes";
+	private final String POST_METHOD = "POST method. Data is going to process";
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -36,6 +38,8 @@ public class EmptyFieldsFilter implements Filter {
 
 		if (httpRequest.getMethod().equals(POST)) {
 
+			logger.debug(POST_METHOD);
+			
 			String email = request.getParameter(EMAIL);
 			String pass = request.getParameter(PASS);
 			String passRepeat = request.getParameter(PASS_REPEAT);
@@ -45,23 +49,27 @@ public class EmptyFieldsFilter implements Filter {
 				boolean[] notFilledFields = EmptyChecker.whatIsNotFilled(email, pass, passRepeat);
 
 				if (notFilledFields[0] == false) {
+					logger.debug("email is empty");
 					request.setAttribute("emailFillingError", EMAIL_EMPTY_ERROR);
 				}
 				if (notFilledFields[1] == false) {
+					logger.debug("password is empty");
 					request.setAttribute("passFillingError", PASS_EMAIL_EMPTY_ERROR_ERROR);
 				}
 				if (notFilledFields[2] == false) {
+					logger.debug("repeated password is empty");
 					request.setAttribute("passRepeatFillingError", PASS_EMAIL_EMPTY_ERROR_FILLING_ERROR);
 				}
 
 				request.getRequestDispatcher(REG_JSP_PATH).forward(request, response);
+				
 			} else {
 				
 				chain.doFilter(request, response);
 			}
 
 		} else {
-			logger.debug("GET method was redirected to registration page without attributes");
+			logger.debug(GET_METHOD);
 			
 			chain.doFilter(request, response);
 		}
