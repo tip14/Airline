@@ -8,16 +8,15 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
 import tip14.airline.utils.CredentialsChecker;
 
+@WebFilter("/registration")
 public class CredentialsFilter implements Filter {
-	//DO LOGGGING
-	//DO LOGGGING AND MAKE MORE INFORMATIVE
-	//DO LOGGGING
 
 	private static final Logger logger = Logger.getLogger(CredentialsFilter.class);
 	private final String REG_JSP_PATH = "WEB-INF/registration.jsp";

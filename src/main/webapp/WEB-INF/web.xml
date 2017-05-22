@@ -14,14 +14,6 @@
 		<filter-name>EmptyFieldsFilter</filter-name>
 		<filter-class>tip14.airline.filter.EmptyFieldsFilter</filter-class>
 	</filter>
-	<filter-mapping>
-		<filter-name>EmptyFieldsFilter</filter-name>
-		<url-pattern>/registration</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>CredentialsFilter</filter-name>
-		<url-pattern>/registration</url-pattern>
-	</filter-mapping>
 	<servlet>
 		<description>
   	</description>
