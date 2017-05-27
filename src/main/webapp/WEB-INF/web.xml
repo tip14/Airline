@@ -14,9 +14,19 @@
 		<filter-name>EmptyFieldsFilter</filter-name>
 		<filter-class>tip14.airline.filter.EmptyFieldsFilter</filter-class>
 	</filter>
+	<filter>
+		<display-name>AuthentificationFilter</display-name>
+		<filter-name>AuthentificationFilter</filter-name>
+		<filter-class>tip14.airline.filter.AuthentificationFilter</filter-class>
+	</filter>
+	<filter>
+		<display-name>LoginFilter</display-name>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>tip14.airline.filter.LoginFilter</filter-class>
+	</filter>
 	<servlet>
 		<description>
-  	</description>
+		</description>
 		<display-name>LoginServlet</display-name>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>tip14.airline.servlet.LoginServlet</servlet-class>
@@ -25,6 +35,7 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/LoginServlet</url-pattern>
 	</servlet-mapping>
+	
 	<welcome-file-list>
 
 		<welcome-file>home</welcome-file>
