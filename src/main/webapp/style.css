@@ -84,7 +84,7 @@ label {
 }
 
 form {
-	margin: 2% auto;
+	margin: 2% auto 1% auto;
 	width: 26%;
 }
 
@@ -204,22 +204,39 @@ select {
 	color: red;
 }
 
-.reg-btn-block {
+.above-text-block {
 	text-align: center;
 }
 
 .reg-btn-btn {
 	width: 25%;
-	font-size: 20px;
+	font-size: 17px;
+	padding: 2px 0;
 	border-radius: 13px;
-	background: #e60404;
+	background: #d2d200;
 	color: white;
 	font-weight: 700;
 	border: none;
 }
 
-.success-reg-msg {
-	color: #00af1f;
-	font-size: 25px;
+.success-msg {
+	color: #3ded6f;
+	font-size: 20px;
 	font-weight: 700;
+	margin: 5px 0;
+}
+
+#logout-btn {
+	width: 5%;
+	background: #ef3951;
+	padding: 2px 30px;
+}
+#login-btn {
+	width: 5%;
+	background: #3ded6f;
+	padding: 2px 30px;
+}
+
+.reg-link {
+	text-align: center;
 }

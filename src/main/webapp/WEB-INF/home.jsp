@@ -16,9 +16,11 @@
 
 			<h1>Airline Project</h1>
 			
-			<div class="reg-btn-block">
+			<div class="above-text-block">				
+				<p class="success-msg">${regSuccess}</p>
+				<p class="success-msg">${authorized}</p>
+				<p class="success-msg">${unauthorized}</p>
 				<a href="registration"><button class="reg-btn-btn">Registration</button></a>
-				<p class="success-reg-msg">${regSuccess}</p>
 			</div>
 			
 			<p>It is an Airline project provides information about airplanes,

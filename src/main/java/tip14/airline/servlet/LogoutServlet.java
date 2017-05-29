@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String JSESSIONID = "JSESSIONID";
-	private static final String AUTHORIZED = "authorized";
-	private static final String HOME_PAGE = "/airline";
+	private static final String LOGGED = "logged";
+	private static final String UNAUTHORIZED = "unauthorized";
+	private static final String UNAUTHORIZED_MSG = "You are LOGGED OUT successfully";
+	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -24,7 +26,8 @@ public class LogoutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getSession().removeAttribute(JSESSIONID);
-		request.getSession().removeAttribute(AUTHORIZED);
+		request.getSession().removeAttribute(LOGGED);
+		request.setAttribute(UNAUTHORIZED, UNAUTHORIZED_MSG);
 
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
@@ -34,7 +37,7 @@ public class LogoutServlet extends HttpServlet {
 			}
 		}
 
-		response.sendRedirect(HOME_PAGE);
+		request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
 
 	}
 

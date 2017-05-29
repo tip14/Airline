@@ -24,7 +24,7 @@
 		</div>		
 		<input type="submit" value="LogIn">
 	</form>
-	<p class=""><a href="registration">Registration</a></p>
+	<p class="reg-link"><a href="registration">Registration</a></p>
 
 </body>
 </html>
