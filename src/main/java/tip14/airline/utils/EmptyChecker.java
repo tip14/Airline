@@ -54,4 +54,10 @@ public class EmptyChecker {
 		
 		return true;
 	}
+	
+	public static boolean isObjectNull(Object obj){
+		
+		return obj == null;
+		
+	}
 }
