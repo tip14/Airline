@@ -15,40 +15,45 @@ import tip14.airline.storage.UserStorage;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(RegistrationServlet.class);
-	private final String REG_JSP_PATH = "WEB-INF/registration.jsp";
-	private final String HOME_JSP_PATH = "WEB-INF/home.jsp";
-	private final String SUCCESS_REG = "Registration was successful";
-	private final String TO_HOME_PAGE = "Redirected to home page";
-	private final String TO_REG_PAGE = "Redirected to registration page";
-	
-	
+
+	private static final String REG_JSP_PATH = "WEB-INF/registration.jsp";
+	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
+	private static final String SUCCESS_REG = "Registration was successful";
+	private static final String TO_HOME_PAGE = "Redirected to home page";
+	private static final String TO_REG_PAGE = "Redirected to registration page";
+	private static final String EMAIL = "email";
+	private static final String PASS = "pass";
+	private static final String ROLE = "role";
+	private static final String USER_ADDED = "User added with email";
+	private static final String SUCCESS_REG_ATTR = "regSuccess";
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		request.getRequestDispatcher(REG_JSP_PATH).forward(request, response);
-		
+
 		logger.debug(TO_REG_PAGE);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
-		String role = request.getParameter("role");
-		
+
+		String email = request.getParameter(EMAIL);
+		String pass = request.getParameter(PASS);
+		String role = request.getParameter(ROLE);
+
 		UserStorage.addUser(new User(email, pass, role));
-		
-		logger.debug("New user" + email+ " was added");
-		
-		request.setAttribute("regSuccess", SUCCESS_REG);
+
+		logger.debug(USER_ADDED + email);
+
+		request.setAttribute(SUCCESS_REG_ATTR, SUCCESS_REG);
 		request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
-		
+
 		logger.debug(TO_HOME_PAGE);
-		
+
 	}
 
 }

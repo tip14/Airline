@@ -15,14 +15,16 @@ import tip14.airline.storage.PlaneStorage;
 @WebServlet("/remove")
 public class RemoveServlet extends HttpServlet {
 	private static final Logger logger = Logger.getLogger(RemoveServlet.class);
-	
-	private final String DASHBOARD_JSP_PATH = "WEB-INF/dashboard.jsp";
-	private final String PLANE_MODEL_FOR_DELETE = "planeModelForDelete";
-	private final String NOT_DELETED = "notdeleted";
-	private final String NOT_DELETED_MESSAGE = "Error while deleting";
-	private final String DELETED = "deleted";
-	private final String DELETED_MESSAGE = "Deleted successful";
-	
+
+	private static final String DASHBOARD_JSP_PATH = "WEB-INF/dashboard.jsp";
+	private static final String PLANE_MODEL_FOR_DELETE = "planeModelForDelete";
+	private static final String NOT_DELETED = "notdeleted";
+	private static final String NOT_DELETED_MESSAGE = "Error while deleting";
+	private static final String DELETED = "deleted";
+	private static final String DELETED_MESSAGE = "Deleted successful";
+	private static final String TRY_TO_DELETE = "Trying to delete";
+	private static final String EXCEPTION = "Exception ";
+
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -30,10 +32,10 @@ public class RemoveServlet extends HttpServlet {
 
 		String planeModel = request.getParameter(PLANE_MODEL_FOR_DELETE);
 		try {
-			logger.info("Trying to delete " + planeModel);
+			logger.info(TRY_TO_DELETE + planeModel);
 			PlaneStorage.deletePlane(planeModel);
 		} catch (Exception e) {
-			logger.error("Exception" + e.getClass().getSimpleName());
+			logger.error(EXCEPTION + e.getClass().getSimpleName());
 			request.setAttribute(NOT_DELETED, NOT_DELETED_MESSAGE);
 			request.getRequestDispatcher(DASHBOARD_JSP_PATH).forward(request, response);
 		}

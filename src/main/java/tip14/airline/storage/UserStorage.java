@@ -10,6 +10,7 @@ import tip14.airline.model.User;
 public class UserStorage {
 
 	private static final Logger logger = Logger.getLogger(UserStorage.class);
+	private static final String USER_ADDED = "User was added to storage with email ";
 
 	private static List<User> userStorage = new ArrayList<User>();
 
@@ -19,7 +20,7 @@ public class UserStorage {
 
 	public static void addUser(User user) {
 		userStorage.add(user);
-		logger.info("User " + user.getEmail() + " was added to storage");
+		logger.info(USER_ADDED + user.getEmail());
 	}
 
 	public static User getUser(String email, String pass) {

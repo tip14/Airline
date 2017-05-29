@@ -13,16 +13,17 @@ import org.apache.log4j.Logger;
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 	private static final Logger logger = Logger.getLogger(HomeServlet.class);
-	
-	private final String HOME_JSP_PATH = "WEB-INF/home.jsp";
+
+	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
+	private static final String GET_REQ_RECEIVED = "GET request is recieved from ";
 
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		logger.debug("GET request is recieved from "+request.getRemoteAddr());
-		
+		logger.debug(GET_REQ_RECEIVED + request.getRemoteAddr());
+
 		request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
 
 	}

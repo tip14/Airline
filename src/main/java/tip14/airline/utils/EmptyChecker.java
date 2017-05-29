@@ -7,18 +7,22 @@ import org.apache.log4j.Logger;
 
 public class EmptyChecker {
 	private static final Logger logger = Logger.getLogger(EmptyChecker.class);
+	private static final String EMPTY_STRINGS = "Some of strings is empty";
+	private static final String FILLED_FIELDS = "All fields are filled";
+	private static final String EMPTY_FIELDS_CHECKED = "Not filled fields were cheched";
+	private static final String EMPTY_LIST = "List is empty";
 
 	public static boolean isFieldsFilled(String... strings) {
 
 		for (String string : strings) {
 
 			if (StringUtils.isBlank(string)) {
-				logger.debug("Some of strings is empty");
+				logger.debug(EMPTY_STRINGS);
 				return false;
 			}
 		}
 
-		logger.debug("All fields are filled");
+		logger.debug(FILLED_FIELDS);
 
 		return true;
 	}
@@ -37,7 +41,7 @@ public class EmptyChecker {
 			}
 		}
 
-		logger.debug("Not filled fields were cheched");
+		logger.debug(EMPTY_FIELDS_CHECKED);
 
 		return filledFields;
 	}
@@ -49,15 +53,15 @@ public class EmptyChecker {
 				return false;
 			}
 		}
-		
-		logger.debug("List is empty");
-		
+
+		logger.debug(EMPTY_LIST);
+
 		return true;
 	}
-	
-	public static boolean isObjectNull(Object obj){
-		
+
+	public static boolean isObjectNull(Object obj) {
+
 		return obj == null;
-		
+
 	}
 }

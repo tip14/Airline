@@ -14,22 +14,30 @@ import tip14.airline.utils.EmptyChecker;
 @WebFilter("/login")
 public class LoginFilter implements Filter {
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
+	private static final String EMAIL = "email";
+	private static final String PASS = "pass";
+	private static final String LOG_JSP_PATH = "WEB-INF/login.jsp";
+	private static final String PASS_FILLING_ERROR_ATTR = "passFillingError";
+	private static final String PASS_FILLING_ERROR_MESSAGE = "Email or password is empty";
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		
-		if(EmptyChecker.isFieldsFilled(email, pass)){
+		String email = request.getParameter(EMAIL);
+		String pass = request.getParameter(PASS);
+
+		if (EmptyChecker.isFieldsFilled(email, pass)) {
 			chain.doFilter(request, response);
 		} else {
-			request.setAttribute("passFillingError", "email or password is empty");
-			request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+			request.setAttribute(PASS_FILLING_ERROR_ATTR, PASS_FILLING_ERROR_MESSAGE);
+			request.getRequestDispatcher(LOG_JSP_PATH).forward(request, response);
 		}
-		
-		
 	}
 
-	public void destroy() {}
-	
-	public void init(FilterConfig fConfig) throws ServletException {}
+	public void destroy() {
+	}
+
+	public void init(FilterConfig fConfig) throws ServletException {
+	}
 
 }

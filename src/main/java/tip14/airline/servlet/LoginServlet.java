@@ -18,12 +18,21 @@ import tip14.airline.storage.UserStorage;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String LOG_JSP_PATH = "WEB-INF/login.jsp";
+	private static final String EMAIL = "email";
+	private static final String PASS = "pass";
+	private static final String USER_EXISTS = "User exists with email";
+	private static final String JSESSIONID = "JSESSIONID";
+	private static final String AUTHORIZED = "authorized";
+	private static final String HOME_PAGE = "/airline";
+	private static final String USER_DOESNT_EXISTS = "User with those credentials doesn't exist";
+	private static final String NOT_EXISTS_ERROR_ATTR = "notExistsError";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
-		
+		request.getRequestDispatcher(LOG_JSP_PATH).forward(request, response);
+
 	}
 
 	private static final Logger logger = Logger.getLogger(CredentialsFilter.class);
@@ -31,22 +40,22 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String email = request.getParameter("email");
-		String pass = request.getParameter("pass");
+		String email = request.getParameter(EMAIL);
+		String pass = request.getParameter(PASS);
 
 		boolean userExists = UserStorage.doesUserExist(email, pass);
 
 		HttpSession session = request.getSession();
 
 		if (userExists) {
-			
-			logger.debug("User " + email + " exists");
+
+			logger.debug(USER_EXISTS + email);
 			int sessionLiveInMinutes = 30;
 			Cookie[] cookies = request.getCookies();
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("JSESSIONID")) {
-					session.setAttribute("JSESSIONID", cookie.getValue());
-					cookie.setMaxAge(sessionLiveInMinutes*60);
+				if (cookie.getName().equals(JSESSIONID)) {
+					session.setAttribute(JSESSIONID, cookie.getValue());
+					cookie.setMaxAge(sessionLiveInMinutes * 60);
 					response.addCookie(cookie);
 					break;
 				}
@@ -54,13 +63,14 @@ public class LoginServlet extends HttpServlet {
 
 			session.setMaxInactiveInterval(sessionLiveInMinutes * 60);
 
-			session.setAttribute("authorized", "authorized");
-			response.sendRedirect("/airline");
+			session.setAttribute(AUTHORIZED, AUTHORIZED);
 			
+			response.sendRedirect(HOME_PAGE);
+
 		} else {
-			logger.debug("User with those credentials doesn't exist");
-			request.setAttribute("notExistsError", "User with those credentials doesn't exist");
-			request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+			logger.debug(USER_DOESNT_EXISTS);
+			request.setAttribute(NOT_EXISTS_ERROR_ATTR, USER_DOESNT_EXISTS);
+			request.getRequestDispatcher(LOG_JSP_PATH).forward(request, response);
 		}
 
 	}

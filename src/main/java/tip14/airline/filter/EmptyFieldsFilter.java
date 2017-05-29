@@ -19,16 +19,19 @@ import tip14.airline.utils.EmptyChecker;
 public class EmptyFieldsFilter implements Filter {
 
 	private static final Logger logger = Logger.getLogger(EmptyFieldsFilter.class);
-	private final String REG_JSP_PATH = "WEB-INF/registration.jsp";
-	private final String EMAIL_EMPTY_ERROR = "email is empty";
-	private final String PASS_EMAIL_EMPTY_ERROR_ERROR = "password is empty";
-	private final String PASS_EMAIL_EMPTY_ERROR_FILLING_ERROR = "repeated password is empty";
-	private final String EMAIL = "email";
-	private final String PASS = "pass";
-	private final String PASS_REPEAT = "pass-repeat";
-	private final String POST = "POST";
-	private final String GET_METHOD = "GET method. Request redirected to registration page without attributes";
-	private final String POST_METHOD = "POST method. Data is going to process";
+	private static final String REG_JSP_PATH = "WEB-INF/registration.jsp";
+	private static final String EMAIL_EMPTY_ERROR = "email is empty";
+	private static final String PASS_EMPTY_ERROR = "password is empty";
+	private static final String REPEAT_PASS_EMPTY_ERROR = "repeated password is empty";
+	private static final String EMAIL_FILLING_ERROR = "emailFillingError";
+	private static final String PASS_FILLING_ERROR = "passFillingError";
+	private static final String REPEAT_PASS_FILLING_ERROR = "passRepeatFillingError";
+	private static final String EMAIL = "email";
+	private static final String PASS = "pass";
+	private static final String PASS_REPEAT = "pass-repeat";
+	private static final String POST = "POST";
+	private static final String GET_METHOD = "GET method. Request redirected to registration page without attributes";
+	private static final String POST_METHOD = "POST method. Data is going to process";
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -48,16 +51,16 @@ public class EmptyFieldsFilter implements Filter {
 				boolean[] notFilledFields = EmptyChecker.whatIsNotFilled(email, pass, passRepeat);
 
 				if (notFilledFields[0] == false) {
-					logger.debug("email is empty");
-					request.setAttribute("emailFillingError", EMAIL_EMPTY_ERROR);
+					logger.debug(EMAIL_EMPTY_ERROR);
+					request.setAttribute(EMAIL_FILLING_ERROR, EMAIL_EMPTY_ERROR);
 				}
 				if (notFilledFields[1] == false) {
-					logger.debug("password is empty");
-					request.setAttribute("passFillingError", PASS_EMAIL_EMPTY_ERROR_ERROR);
+					logger.debug(PASS_EMPTY_ERROR);
+					request.setAttribute(PASS_FILLING_ERROR, PASS_EMPTY_ERROR);
 				}
 				if (notFilledFields[2] == false) {
-					logger.debug("repeated password is empty");
-					request.setAttribute("passRepeatFillingError", PASS_EMAIL_EMPTY_ERROR_FILLING_ERROR);
+					logger.debug(REPEAT_PASS_EMPTY_ERROR);
+					request.setAttribute(REPEAT_PASS_FILLING_ERROR, REPEAT_PASS_EMPTY_ERROR);
 				}
 
 				request.getRequestDispatcher(REG_JSP_PATH).forward(request, response);
