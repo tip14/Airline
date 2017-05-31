@@ -29,6 +29,7 @@ public class LoginServlet extends HttpServlet {
 	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
 	private static final String USER_DOESNT_EXISTS = "User with those credentials doesn't exist";
 	private static final String NOT_EXISTS_ERROR_ATTR = "notExistsError";
+	private static final String USER_MAIL = "userMail";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -64,8 +65,9 @@ public class LoginServlet extends HttpServlet {
 			}
 
 			session.setMaxInactiveInterval(sessionLiveInMinutes * 60);
-
-			request.getSession().setAttribute(LOGGED, LOGGED);
+			session.setAttribute(LOGGED, LOGGED);
+			session.setAttribute(USER_MAIL, email);
+			
 			request.setAttribute(AUTHORIZED, AUTHORIZED_MSG);
 			request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
 

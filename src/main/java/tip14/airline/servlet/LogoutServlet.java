@@ -16,6 +16,7 @@ public class LogoutServlet extends HttpServlet {
 	private static final String UNAUTHORIZED = "unauthorized";
 	private static final String UNAUTHORIZED_MSG = "You are LOGGED OUT successfully";
 	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
+	private static final String USER_MAIL = "userMail";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -25,6 +26,8 @@ public class LogoutServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.getSession().removeAttribute(USER_MAIL);
 		request.getSession().removeAttribute(JSESSIONID);
 		request.getSession().removeAttribute(LOGGED);
 		request.setAttribute(UNAUTHORIZED, UNAUTHORIZED_MSG);

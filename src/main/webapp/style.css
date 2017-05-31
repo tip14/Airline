@@ -13,10 +13,6 @@ a, a:visited, a:hover, a:active {
 	text-decoration: none;
 }
 
-nav {
-	margin: 3% 0 0;
-}
-
 h1 {
 	font-size: 32px;
 	margin-bottom: 3%;
@@ -52,7 +48,7 @@ h1 {
 }
 
 section {
-	margin: 4% auto 0;
+	margin: 3% auto 0;
 	width: 40%;
 }
 
@@ -239,4 +235,9 @@ select {
 
 .reg-link {
 	text-align: center;
+}
+
+#user-mail{
+	text-align: right;
+	margin: 0;
 }

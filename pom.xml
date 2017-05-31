@@ -6,7 +6,7 @@
 	<artifactId>airline</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Airline</name>
+	<name>airline</name>
 
 	<dependencies>
 		<dependency>
@@ -76,7 +76,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>Airline</finalName>
+		<finalName>airline</finalName>
 	</build>
 
 	<profiles>
