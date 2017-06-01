@@ -20,7 +20,7 @@ public class RegistrationServlet extends HttpServlet {
 	private static final Logger logger = Logger.getLogger(RegistrationServlet.class);
 
 	private static final String REG_JSP_PATH = "WEB-INF/registration.jsp";
-	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
+	private static final String HOME_PAGE = "/airline";
 	private static final String SUCCESS_REG = "Registration was successful";
 	private static final String TO_HOME_PAGE = "Redirected to home page";
 	private static final String TO_REG_PAGE = "Redirected to registration page";
@@ -50,7 +50,7 @@ public class RegistrationServlet extends HttpServlet {
 		logger.debug(USER_ADDED + email);
 
 		request.getSession().setAttribute(SUCCESS_REG_ATTR, SUCCESS_REG);
-		response.sendRedirect("/airline");
+		response.sendRedirect(HOME_PAGE);
 
 		logger.debug(TO_HOME_PAGE);
 

@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 	private static final String AUTHORIZED = "authorized";
 	private static final String LOGGED = "logged";
 	private static final String AUTHORIZED_MSG = "You are LOGGED IN successfully";
-	private static final String HOME_JSP_PATH = "WEB-INF/home.jsp";
+	private static final String HOME_PAGE = "/airline";
 	private static final String USER_DOESNT_EXISTS = "User with those credentials doesn't exist";
 	private static final String NOT_EXISTS_ERROR_ATTR = "notExistsError";
 	private static final String USER_MAIL = "userMail";
@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 			
 			session.setAttribute(AUTHORIZED, AUTHORIZED_MSG);
 			
-			response.sendRedirect("/airline");
+			response.sendRedirect(HOME_PAGE);
 
 		} else {
 			logger.debug(USER_DOESNT_EXISTS);
