@@ -30,7 +30,8 @@ public class LogoutServlet extends HttpServlet {
 		request.getSession().removeAttribute(USER_MAIL);
 		request.getSession().removeAttribute(JSESSIONID);
 		request.getSession().removeAttribute(LOGGED);
-		request.setAttribute(UNAUTHORIZED, UNAUTHORIZED_MSG);
+		
+		request.getSession().setAttribute(UNAUTHORIZED, UNAUTHORIZED_MSG);
 
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
@@ -40,8 +41,7 @@ public class LogoutServlet extends HttpServlet {
 			}
 		}
 
-		request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
-
+		response.sendRedirect("/airline");
 	}
 
 }

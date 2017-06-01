@@ -66,10 +66,11 @@ public class LoginServlet extends HttpServlet {
 
 			session.setMaxInactiveInterval(sessionLiveInMinutes * 60);
 			session.setAttribute(LOGGED, LOGGED);
-			session.setAttribute(USER_MAIL, email);
+			session.setAttribute(USER_MAIL, email);		
 			
-			request.setAttribute(AUTHORIZED, AUTHORIZED_MSG);
-			request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
+			session.setAttribute(AUTHORIZED, AUTHORIZED_MSG);
+			
+			response.sendRedirect("/airline");
 
 		} else {
 			logger.debug(USER_DOESNT_EXISTS);

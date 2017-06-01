@@ -49,8 +49,8 @@ public class RegistrationServlet extends HttpServlet {
 
 		logger.debug(USER_ADDED + email);
 
-		request.setAttribute(SUCCESS_REG_ATTR, SUCCESS_REG);
-		request.getRequestDispatcher(HOME_JSP_PATH).forward(request, response);
+		request.getSession().setAttribute(SUCCESS_REG_ATTR, SUCCESS_REG);
+		response.sendRedirect("/airline");
 
 		logger.debug(TO_HOME_PAGE);
 

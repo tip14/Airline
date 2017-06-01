@@ -17,9 +17,14 @@
 			<h1>Airline Project</h1>
 			
 			<div class="above-text-block">				
-				<p class="success-msg">${regSuccess}</p>
-				<p class="success-msg">${authorized}</p>
-				<p class="success-msg">${unauthorized}</p>
+
+				<p class="success-msg"><c:out value="${sessionScope.regSuccess}" /></p>
+				<c:remove var="regSuccess" scope="session" />
+				<p class="success-msg"><c:out value="${sessionScope.authorized}" /></p>
+				<c:remove var="authorized" scope="session" />
+				<p class="success-msg"><c:out value="${sessionScope.unauthorized}" /></p>
+				<c:remove var="unauthorized" scope="session" />
+
 				<a href="registration"><button class="reg-btn-btn">Registration</button></a>
 			</div>
 			
