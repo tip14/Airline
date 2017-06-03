@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +23,6 @@ public class AuthentificationFilter implements Filter {
 	private final Logger logger = Logger.getLogger(AuthentificationFilter.class);
 
 	private static final String JSESSIONID = "JSESSIONID";
-	private static final String SUCCESS_AUTH = "Successful authorization for ";
 	private static final String HOME_PAGE = "/airline";
 	private static final String UNAUTH_ACCESS = "Unauthorized access to ";
 	private static final String UNAUTH_ATTR = "unauthorized";
@@ -38,33 +36,13 @@ public class AuthentificationFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		boolean JSESSIONIDisExists = !EmptyChecker.isObjectNull(httpRequest.getSession().getAttribute(JSESSIONID));
-		boolean CookiesAreExist = !EmptyChecker.isObjectNull(httpRequest.getCookies());
 
-		if (JSESSIONIDisExists && CookiesAreExist) {
+		if (JSESSIONIDisExists) {
 
-			String sessionId = httpRequest.getSession().getAttribute(JSESSIONID).toString();
-			String cookieId = null;
-
-			Cookie[] cookies = httpRequest.getCookies();
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(JSESSIONID)) {
-					cookieId = cookie.getValue();
-					break;
-				}
-			}
-
-			if (sessionId.equals(cookieId)) {
-				logger.debug(SUCCESS_AUTH + sessionId);
-				if (AccessDefiner.isLoginAccessAvailable(httpRequest.getRequestURI())) {
-					chain.doFilter(request, response);
-				} else {
-					httpResponse.sendRedirect(HOME_PAGE);
-				}
-
+			if (AccessDefiner.isLoginAccessAvailable(httpRequest.getRequestURI())) {
+				chain.doFilter(request, response);
 			} else {
-				logger.debug(UNAUTH_ACCESS + httpRequest.getRequestURI());
-				request.setAttribute(UNAUTH_ATTR, UNAUTH_MSG);
-				httpResponse.sendRedirect(LOGIN_PAGE);
+				httpResponse.sendRedirect(HOME_PAGE);
 			}
 
 		} else {
