@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import tip14.airline.model.Plane;
-import tip14.airline.storage.PlaneStorage;
+import tip14.airline.dao.PlaneDAO;
 import tip14.airline.utils.EmptyChecker;
 
 @WebServlet("/add")
@@ -54,9 +53,8 @@ public class AddServlet extends HttpServlet {
 			logger.debug(ALL_FIELDS_FILLED);
 
 			int newPlaneCapacity = Integer.parseInt(capacity);
-
-			Plane newPlane = new Plane(newPlaneModel, newPlaneCapacity, newPlaneBuildDate);
-			PlaneStorage.addPlane(newPlane);
+			PlaneDAO pd = new PlaneDAO();
+			pd.createPlane(newPlaneModel, newPlaneCapacity, newPlaneBuildDate);
 
 			request.setAttribute(SUCCESS, SUCCESS_MESSAGE);
 			request.getRequestDispatcher(ADD_JSP_PATH).forward(request, response);

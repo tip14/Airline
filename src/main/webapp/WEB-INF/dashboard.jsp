@@ -22,7 +22,8 @@
 
 			<p class="after-add-msg error-added">${notfound}</p>
 			<p class="after-add-msg error-added">${notdeleted}</p>
-			<p class="after-add-msg success-added">${deleted}</p>
+			<p class="after-add-msg success-added">${sessionScope.deleted}</p>
+			<c:remove var="deleted" scope="session" />
 
 			<table>
 				<tr>

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import tip14.airline.dao.PlaneDAO;
 import tip14.airline.model.Plane;
-import tip14.airline.storage.PlaneStorage;
 
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
@@ -33,14 +33,16 @@ public class SearchServlet extends HttpServlet {
 
 		logger.debug(POST_REQ_RECEIVED + request.getRemoteAddr());
 
-		String wordForSearch = request.getParameter(SEARCH_FIELD);
-		List<Plane> foundPlanesList = PlaneStorage.getFoundPlanes(wordForSearch);
+		String modelForSearch = request.getParameter(SEARCH_FIELD);
+		PlaneDAO pd = new PlaneDAO();
+
+		List<Plane> foundPlanesList = pd.readPlanesByModel(modelForSearch);
 
 		if (foundPlanesList.isEmpty()) {
-			request.setAttribute(NOT_FOUND, NOT_FOUND_MESSAGE + wordForSearch);
-			logger.info(NOT_FOUND_MESSAGE + wordForSearch);
+			request.setAttribute(NOT_FOUND, NOT_FOUND_MESSAGE + modelForSearch);
+			logger.info(NOT_FOUND_MESSAGE + modelForSearch);
 		} else {
-			logger.info(PLANES_FOUND_MESSAGE + wordForSearch);
+			logger.info(PLANES_FOUND_MESSAGE + modelForSearch);
 			request.setAttribute(PLANES_FOUND, foundPlanesList);
 		}
 

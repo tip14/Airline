@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import tip14.airline.dao.UserDAO;
-import tip14.airline.model.User;
-import tip14.airline.storage.UserStorage;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -46,15 +44,8 @@ public class RegistrationServlet extends HttpServlet {
 		String pass = request.getParameter(PASS);
 		String role = request.getParameter(ROLE);
 
-		UserStorage.addUser(new User(email, pass, role));
-		
 		UserDAO udao = new UserDAO();
 		udao.createUser(email, pass, role);
-		
-		User u = udao.readUserByEmail("alexeykopyev@gmail.com");
-		System.out.println(u.getEmail() + "spartaaaaaaaaaaaaaaaaaaaaaaaaa");
-		udao.readUsers();
-		udao.deleteUser("alexeykopyev@gmail.com");
 
 		logger.debug(USER_ADDED + email);
 

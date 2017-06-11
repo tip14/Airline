@@ -16,20 +16,19 @@ public class UserDAO {
 	private String sql = "";
 
 	public void createUser(String email, String password, String role) {
-		
-		sql = "INSERT INTO public.\"Users\" VALUES ("+ "'" + email + "'" + "," + "'" +password + "'" + "," +  "'" +role + "'" + ");";
+
+		sql = "INSERT INTO public.\"Users\" VALUES (" + "'" + email + "'" + "," + "'" + password + "'" + "," + "'"
+				+ role + "'" + ");";
 
 		try {
 			statement = dbConnection.createStatement();
 			statement.execute(sql);
 			statement.close();
-						
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-
-		
 
 	}
 
@@ -38,73 +37,90 @@ public class UserDAO {
 		String mail;
 		String password;
 		String role;
-		
+
 		sql = "SELECT * FROM public.\"Users\";";
 		try {
 			statement = dbConnection.createStatement();
 			ResultSet res = statement.executeQuery(sql);
-			
-			while(res.next()){
+
+			while (res.next()) {
 				mail = res.getString("email");
 				password = res.getString("password");
 				role = res.getString("role");
-				
-				userList.add(new User(mail, password, role));	
+
+				userList.add(new User(mail, password, role));
 			}
-			
+
 			return userList;
-			
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return userList;
-		
 
 	}
-	
+
 	public User readUserByEmail(String email) {
 		User u = null;
 		String mail;
 		String password;
 		String role;
-		
+
 		sql = "SELECT * FROM public.\"Users\" WHERE " + "email = '" + email + "';";
+
 		try {
 			statement = dbConnection.createStatement();
 			ResultSet res = statement.executeQuery(sql);
-	
-			if(res.next()){
+
+			if (res.next()) {
 				mail = res.getString("email");
 				password = res.getString("password");
 				role = res.getString("role");
-				
+
 				u = new User(mail, password, role);
 			}
-			
+
 			return u;
-			
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return u;
-		
+
+	}
+
+	public boolean doesUserExists(String email, String pass) {
+
+		sql = "SELECT * FROM public.\"Users\" WHERE " + "email = '" + email + "' and password = '" + pass + "';";
+
+		try {
+			statement = dbConnection.createStatement();
+			ResultSet res = statement.executeQuery(sql);
+
+			if (res.next()) {
+				return true;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 
 	}
 
 	public void deleteUser(String email) {
-		
+
 		sql = "DELETE FROM public.\"Users\" WHERE " + "email = '" + email + "';";
+
 		try {
 			statement = dbConnection.createStatement();
-			statement.executeQuery(sql);
-			
+			statement.executeUpdate(sql);
+
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 
 	}
 

@@ -146,6 +146,10 @@ td {
 	text-align: center;
 }
 
+tr:hover {
+	background: #bee2f1;
+}
+
 .delete-form input[type="submit"], .delete-form input[type="submit"]:hover
 	{
 	display: block;
@@ -227,6 +231,7 @@ select {
 	background: #ef3951;
 	padding: 2px 30px;
 }
+
 #login-btn {
 	width: 5%;
 	background: #3ded6f;
@@ -237,7 +242,7 @@ select {
 	text-align: center;
 }
 
-#user-mail{
+#user-mail {
 	text-align: right;
 	margin: 0;
 }

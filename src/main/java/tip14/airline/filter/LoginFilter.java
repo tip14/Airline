@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-import tip14.airline.storage.UserStorage;
+import tip14.airline.dao.UserDAO;
 import tip14.airline.utils.EmptyChecker;
 
 @WebFilter("/login")
@@ -33,9 +33,11 @@ public class LoginFilter implements Filter {
 
 		if (EmptyChecker.isFieldsFilled(email, pass)) {
 
-			boolean userExists = UserStorage.doesUserExist(email, pass);
+			// boolean userExists = UserStorage.doesUserExist(email, pass);
 
-			if (userExists) {
+			UserDAO ud = new UserDAO();
+
+			if (ud.doesUserExists(email, pass)) {
 
 				request.setAttribute(USER_MAIL, email);
 				chain.doFilter(request, response);
