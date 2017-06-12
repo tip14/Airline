@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import tip14.airline.model.Plane;
 
 public class PlaneDAO {
@@ -14,6 +16,14 @@ public class PlaneDAO {
 	private Connection dbConnection = DBConnect.connect();
 	private Statement statement = null;
 	private String sql = "";
+	private static final Logger logger = Logger.getLogger(PlaneDAO.class);
+	private static final String SELECT_PLANES = "SELECT * FROM public.\"Planes\";";
+	
+	private static final String MODEL = "model";
+	private static final String CAPACITY = "capacity";
+	private static final String BUILD_DATE = "buildDate";
+	private static final String SQL_EXCEPTION = "Error in connectond to db: SQLException";
+	private static final String PLANE_ADDED = "Plane was added with model: ";
 
 	public void createPlane(String model, int capacity, String buildDate) {
 
@@ -24,6 +34,8 @@ public class PlaneDAO {
 			statement = dbConnection.createStatement();
 			statement.execute(sql);
 			statement.close();
+			
+			logger.debug(PLANE_ADDED + model);
 
 		} catch (SQLException e) {
 
@@ -39,17 +51,15 @@ public class PlaneDAO {
 		int capacity;
 		String buildDate;
 
-		sql = "SELECT * FROM public.\"Planes\";";
-
 		try {
 			statement = dbConnection.createStatement();
-			ResultSet res = statement.executeQuery(sql);
+			ResultSet res = statement.executeQuery(SELECT_PLANES);
 
 			while (res.next()) {
 
-				model = res.getString("model");
-				capacity = Integer.parseInt(res.getString("capacity"));
-				buildDate = res.getString("buildDate");
+				model = res.getString(MODEL);
+				capacity = Integer.parseInt(res.getString(CAPACITY));
+				buildDate = res.getString(BUILD_DATE);
 
 				PlaneList.add(new Plane(model, capacity, buildDate));
 			}
@@ -59,7 +69,7 @@ public class PlaneDAO {
 			return PlaneList;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 		return PlaneList;
 
@@ -78,9 +88,9 @@ public class PlaneDAO {
 			ResultSet res = statement.executeQuery(sql);
 
 			while (res.next()) {
-				model = res.getString("model");
-				capacity = Integer.parseInt(res.getString("capacity"));
-				buildDate = res.getString("buildDate");
+				model = res.getString(MODEL);
+				capacity = Integer.parseInt(res.getString(CAPACITY));
+				buildDate = res.getString(BUILD_DATE);
 
 				planeList.add(new Plane(model, capacity, buildDate));
 			}
@@ -90,7 +100,7 @@ public class PlaneDAO {
 			return planeList;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 		return planeList;
 
@@ -105,8 +115,7 @@ public class PlaneDAO {
 			statement.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 
 	}

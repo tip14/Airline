@@ -7,6 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import tip14.airline.model.User;
 
 public class UserDAO {
@@ -14,6 +16,14 @@ public class UserDAO {
 	private Connection dbConnection = DBConnect.connect();
 	private Statement statement = null;
 	private String sql = "";
+	private static final Logger logger = Logger.getLogger(UserDAO.class);
+	private static final String SQL_EXCEPTION = "Error in connectond to db: SQLException";
+	private static final String SELECT_ALL_USERS = "SELECT * FROM public.\"Users\";";	
+	private static final String USER_ADDED = "User was added to DB";
+	private static final String EMAIL = "email";
+	private static final String PASSWORD = "password";
+	private static final String ROLE = "role";
+	private static final String DELETED_SUCCESS = "User deleted succesfully with email: ";
 
 	public void createUser(String email, String password, String role) {
 
@@ -23,30 +33,30 @@ public class UserDAO {
 		try {
 			statement = dbConnection.createStatement();
 			statement.execute(sql);
+			logger.debug(USER_ADDED);
 			statement.close();
-
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 
 	}
 
 	public List<User> readUsers() {
+
 		List<User> userList = new ArrayList<User>();
 		String mail;
 		String password;
 		String role;
 
-		sql = "SELECT * FROM public.\"Users\";";
 		try {
 			statement = dbConnection.createStatement();
-			ResultSet res = statement.executeQuery(sql);
+			ResultSet res = statement.executeQuery(SELECT_ALL_USERS);
 
 			while (res.next()) {
-				mail = res.getString("email");
-				password = res.getString("password");
-				role = res.getString("role");
+
+				mail = res.getString(EMAIL);
+				password = res.getString(PASSWORD);
+				role = res.getString(ROLE);
 
 				userList.add(new User(mail, password, role));
 			}
@@ -54,7 +64,7 @@ public class UserDAO {
 			return userList;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 
 		return userList;
@@ -62,21 +72,22 @@ public class UserDAO {
 	}
 
 	public User readUserByEmail(String email) {
+
 		User u = null;
 		String mail;
 		String password;
 		String role;
 
-		sql = "SELECT * FROM public.\"Users\" WHERE " + "email = '" + email + "';";
+		sql = "SELECT * FROM public.\"Users\" WHERE email = '" + email + "';";
 
 		try {
 			statement = dbConnection.createStatement();
 			ResultSet res = statement.executeQuery(sql);
 
 			if (res.next()) {
-				mail = res.getString("email");
-				password = res.getString("password");
-				role = res.getString("role");
+				mail = res.getString(EMAIL);
+				password = res.getString(PASSWORD);
+				role = res.getString(ROLE);
 
 				u = new User(mail, password, role);
 			}
@@ -84,7 +95,7 @@ public class UserDAO {
 			return u;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 		return u;
 
@@ -92,7 +103,7 @@ public class UserDAO {
 
 	public boolean doesUserExists(String email, String pass) {
 
-		sql = "SELECT * FROM public.\"Users\" WHERE " + "email = '" + email + "' and password = '" + pass + "';";
+		sql = "SELECT * FROM public.\"Users\" WHERE email = '" + email + "' and password = '" + pass + "';";
 
 		try {
 			statement = dbConnection.createStatement();
@@ -103,7 +114,7 @@ public class UserDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 
 		return false;
@@ -112,14 +123,15 @@ public class UserDAO {
 
 	public void deleteUser(String email) {
 
-		sql = "DELETE FROM public.\"Users\" WHERE " + "email = '" + email + "';";
+		sql = "DELETE FROM public.\"Users\" WHERE email = '" + email + "';";
 
 		try {
 			statement = dbConnection.createStatement();
 			statement.executeUpdate(sql);
+			logger.debug(DELETED_SUCCESS + email);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.debug(SQL_EXCEPTION);
 		}
 
 	}
